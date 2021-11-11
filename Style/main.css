@@ -9,14 +9,34 @@ nav h1, nav .h1 {
   color: #D04F4F;
 }
 
-.container-box li {
+.container-ingredients div {
   background-color: #3282F7;
   color: white;
+  border: none;
+  flex: 1 1 200px;
 }
 
-.container-box {
+.container-ingredients {
   background-color: #3282F7;
   max-width: 600px;
+}
+
+.container-ingredients input {
+  height: 50px;
+  color: white;
+  background-color: #3282F7;
+  -webkit-appearance: none;
+  width: 550px;
+}
+
+.container-ingredients input:active {
+  border: none;
+  -webkit-appearance: none;
+}
+
+.container-ingredients input::placeholder {
+  color: #FFFFFF;
+  opacity: 0.7;
 }
 
 .ingredients-list {
@@ -27,8 +47,91 @@ nav h1, nav .h1 {
   justify-content: space-between;
 }
 
-input {
-  background-color: #3282F7;
+.list-group-item + .list-group-item {
+  border: none;
+}
+
+.list-group-item:nth-child(0) {
+  border: 0px;
+}
+
+.container-appareil div {
+  background-color: #68D9A4;
+  color: white;
+  border: none;
+  flex: 1 1 200px;
+}
+
+.container-appareil {
+  background-color: #68D9A4;
+  max-width: 600px;
+}
+
+.container-appareil input {
+  height: 50px;
+  color: white;
+  background-color: #68D9A4;
+  -webkit-appearance: none;
+  width: 550px;
+}
+
+.container-appareil input:active {
+  border: none;
+  -webkit-appearance: none;
+}
+
+.container-appareil input::placeholder {
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+.appareil-list {
+  background-color: #68D9A4;
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.list-group-item + .list-group-item {
+  border: none;
+}
+
+.list-group-item:nth-child(0) {
+  border: 0px;
+}
+
+.container-ustensil div {
+  background-color: #ED6454;
+  color: white;
+  border: none;
+  flex: 1 1 200px;
+}
+
+.container-ustensil {
+  background-color: #ED6454;
+  max-width: 600px;
+}
+
+.container-ustensil input {
+  height: 50px;
+  color: white;
+  background-color: #ED6454;
+  -webkit-appearance: none;
+  width: 550px;
+}
+
+.container-ustensil input:active {
+  border: none;
+  -webkit-appearance: none;
+}
+
+.ustensil-list {
+  background-color: #ED6454;
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .list-group-item + .list-group-item {

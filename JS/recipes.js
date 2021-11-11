@@ -252,7 +252,7 @@
         "time": 50,
         "description": "Etaler la pate dans les moules à tartelette. Faire cuire la pate 30 minutes. Découper le chocolat en morceau et le faire chauffer, y ajouter la crême liquide, ajouter le beurre et remuer jusqu'à avoir une pâte homogène. Verser la pate sur les tartelettes. Couper les fraises en 2 et les positionner sur ",
         "appliance":"Four",
-        "ustensils":["moule à tartelettes", "casserolle"]
+        "ustensils":["moule à tartelettes", "casserole"]
     }, {
         "id": 8,
         "name": "Brownie",
@@ -424,7 +424,7 @@
             }
         ],
         "time": 40,
-        "description": "Éplucher les fruits et les couper en morceaux, les mettre dans une casserolle en ajoutant l'eau et le sucre vanillé. Laisser cuire 15 minutes en remuant régulièrement.",
+        "description": "Éplucher les fruits et les couper en morceaux, les mettre dans une casserole en ajoutant l'eau et le sucre vanillé. Laisser cuire 15 minutes en remuant régulièrement.",
         "appliance": "Casserole",
         "ustensils": ["couteau", "économe"]
     },
@@ -502,7 +502,7 @@
         "time": 100,
         "description":"Mélanger la farine et les oeufs, faire fondre 25 grammes de beurre et ajouter à la pâte. Ajouter du sel. Laisser reposer 1 heure. Faire les galettes et laisser refroidire. Faire chauffer les saucisses avec du beurre et l'oignon. Enrouler les saucisses dans les crêpes avec une partie du fromage. Mettre le reste du fromage à raclette par dessus les crêpes. Passer four pendant 20 minutes",
         "appliance": "Four",
-        "ustensils":["poelle à frire","couteau"]
+        "ustensils":["poêle à frire","couteau"]
     },
     {
         "id": 15,
@@ -540,7 +540,7 @@
         ],
         "time": 60,
         "description":"Mélangez dans un saladier, la farine, les oeufs, et le lait. Battez jusqu'à avoir une masse homogène. Pendant ce temps faites fondre le beurre et ajoutez en une partie à la pâte à crêpes. Faire fondre le chocolat ( avec le reste du beurre salé ). Lorsque vous chauffez les crêpes. Ajouter le chocolat fondu et les bananes coupées en rondelles. Ajoutez une touche de chantilly pour les gourmands",
-        "appliance": "Poële à crêpe",
+        "appliance": "poêle",
         "ustensils":["saladier", "louche", "cuillère en bois"]
     },
     {
@@ -741,8 +741,8 @@
             }
         ],
         "time": 30,
-        "description":"Cuisiner la viande hachée dans une poelle à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.",
-        "appliance": "Casserole.",
+        "description":"Cuisiner la viande hachée dans une poêle à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.",
+        "appliance": "Casserole",
         "ustensils":["Cuillère en bois", "louche", "couteau"]
     },
     {
@@ -1081,7 +1081,7 @@
         ],
         "time": 60,
         "description":"Découper en cubes les carottes et pommes de terre. Faire revenir dans du beurre. Ajouter les lardons, une fois les lardons dorés, ajouter un grand verre d'eau. Ajouter les petit poids et les haricots verts ( tous deux pré cuits ). Ajouter Sel, poivre, thyms et laurier",
-        "appliance": "Poële",
+        "appliance": "poêle",
         "ustensils":["Couteau", "économe"]
     },
     {
@@ -1184,7 +1184,7 @@
             }
         ],
         "time": 25,
-        "description":"Eplucher les patates douces et coupez les en morceaux. Les faire cuire durant 20 minute dans une casserolle d'eau bouillante. Passer au mixer en ajoutant la crème et l'huile d'olive à son gout. Salez, poivrez. Pressez l'orange et ajouter le jus à l'ensemble. Servir.",
+        "description":"Eplucher les patates douces et coupez les en morceaux. Les faire cuire durant 20 minute dans une casserole d'eau bouillante. Passer au mixer en ajoutant la crème et l'huile d'olive à son gout. Salez, poivrez. Pressez l'orange et ajouter le jus à l'ensemble. Servir.",
         "appliance": "Mixer",
         "ustensils":["couteau", "économe", "cuillère en bois"]
     },
@@ -1304,7 +1304,7 @@
         "time": 60,
         "description":"Couper les courgettes dans le sens de la longueur. Vider les courgette dans un saladier. Réserver.Faire revenir la chair des courgettes dans 25cl d'huile d'olive. Ajouter l'oignon puis la viande hachée. Mettre la farce dans les courgettes. Ajouter le coulis de tomates. Mettre au four pendant 30 minutes. Avant la fin de la cuisson ajouter le fromage rapé",
         "appliance": "Four",
-        "ustensils":["couteau", "cuillère en bois", "Poelle à frire"]
+        "ustensils":["couteau", "cuillère en bois", "poêle à frire"]
     },
     {
         "id": 38,

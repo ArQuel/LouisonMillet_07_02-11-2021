@@ -51,33 +51,36 @@ const ListGroupIngredients = document.querySelector('.ingredients-list')
 // })
 boutonIngredients.addEventListener('click', (e) => {
   ListGroupIngredients.innerHTML = ''
-for (let i = 0; i < 29; i ++) {
+for (let i = 0; i < 30; i ++) {
   console.log('test')
           ListGroupIngredients.innerHTML += 
-          `<li class="list-group-item">${ingredientsTabFinal[i]}</li>`
+          `<div class="list-group-item">${ingredientsTabFinal[i][0].toUpperCase() +  
+            ingredientsTabFinal[i].slice(1)}</div>`
 }
 })
 
 
 // Afficher les appareils dans la liste
-const boutonAppliance = document.querySelector('#bouton-appliance')
-const ListGroupAppliance = document.querySelector('.list-group-appliance')
+const boutonAppliance = document.querySelector('.container-appareil')
+const ListGroupAppliance = document.querySelector('.appareil-list')
 boutonAppliance.addEventListener('click', (e) => {
   ListGroupAppliance.innerHTML = ''
 for (let i = 0; i < applianceTabFinal.length; i ++) {
           ListGroupAppliance.innerHTML += 
-          `<li class="list-group-item">${applianceTabFinal[i]}</li>`
+          `<div class="list-group-item">${applianceTabFinal[i][0].toUpperCase() +  
+            applianceTabFinal[i].slice(1)}</div>`
 }
 })
 
 // Afficher les ustensils dans la liste
-const boutonUstensils = document.querySelector('#bouton-ustensils')
-const ListGroupUstensils = document.querySelector('.list-group-ustensils')
+const boutonUstensils = document.querySelector('.container-ustensil')
+const ListGroupUstensils = document.querySelector('.ustensil-list')
 boutonUstensils.addEventListener('click', (e) => {
   ListGroupUstensils.innerHTML = ''
 for (let i = 0; i < ustensilsTabFinal.length; i ++) {
           ListGroupUstensils.innerHTML += 
-          `<li class="list-group-item">${ustensilsTabFinal[i]}</li>`
+          `<div class="list-group-item">${ustensilsTabFinal[i][0].toUpperCase() +  
+            ustensilsTabFinal[i].slice(1)}</div>`
 }
 })
 

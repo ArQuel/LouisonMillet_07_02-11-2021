@@ -1,12 +1,36 @@
-.container-box li { 
+// Section des containers
+
+
+// Container ingredients
+.container-ingredients div { 
   background-color: $secondary-color;
   color: white;
+  border: none;
+  flex: 1 1 200px;
 }
 
-.container-box {
+.container-ingredients{
   background-color: $secondary-color;
   max-width: 600px;
+  input {
+    height: 50px;
+    color: white;
+    background-color: $secondary-color;
+    -webkit-appearance: none;
+    width: 550px;
+  }
+  
+  input:active{
+    border: none;
+    -webkit-appearance: none
+  }
+  
+  input::placeholder{
+    color: #FFFFFF;
+    opacity: 0.7;
+  }
 }
+
 
 .ingredients-list {
   background-color: $secondary-color;
@@ -16,8 +40,96 @@
   justify-content: space-between;
 }
 
-input {
-  background-color: $secondary-color;
+
+
+.list-group-item + .list-group-item {
+  border: none;
+}
+
+.list-group-item:nth-child(0) {
+  border: 0px;
+}
+
+
+// Container Appareils
+.container-appareil div { 
+  background-color: $tertiary-color;
+  color: white;
+  border: none;
+  flex: 1 1 200px;
+}
+
+.container-appareil{
+  background-color: $tertiary-color;
+  max-width: 600px;
+  input {
+    height: 50px;
+    color: white;
+    background-color: $tertiary-color;
+    -webkit-appearance: none;
+    width: 550px;
+  }
+  
+  input:active{
+    border: none;
+    -webkit-appearance: none
+  }
+  
+  input::placeholder{
+    color: #FFFFFF;
+    opacity: 0.7;
+  }
+}
+
+
+.appareil-list {
+  background-color: $tertiary-color;
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.list-group-item + .list-group-item {
+  border: none;
+}
+
+.list-group-item:nth-child(0) {
+  border: 0px;
+}
+
+
+// Container Ustensiles
+.container-ustensil div { 
+  background-color: $quadri-color;
+  color: white;
+  border: none;
+  flex: 1 1 200px;
+}
+
+.container-ustensil{
+  background-color: $quadri-color;
+  max-width: 600px;
+  input {
+    height: 50px;
+    color: white;
+    background-color: $quadri-color;
+    -webkit-appearance: none;
+    width: 550px;
+  }
+  input:active{
+    border: none;
+    -webkit-appearance: none
+  }
+}
+
+
+.ustensil-list {
+  background-color: $quadri-color;
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .list-group-item + .list-group-item {
