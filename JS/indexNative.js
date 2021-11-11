@@ -43,15 +43,15 @@ console.log(ustensilsTabFinal)
 
 
 // Afficher les ingrédients dans la liste
-const boutonIngredients = document.querySelector('#bouton-ingredients')
-const ListGroupIngredients = document.querySelector('.list-group-ingredients')
+const boutonIngredients = document.querySelector('.container-ingredients')
+const ListGroupIngredients = document.querySelector('.ingredients-list')
 // Pour la deuxième partie
 // boutonIngredients.addEventListener('click', (e) => {
 //   ListGroupIngredients.innerHTML = ingredientsTabFinal.map(elt =>  `<li class="list-group-item">${elt}</li>` ).join('')
 // })
 boutonIngredients.addEventListener('click', (e) => {
   ListGroupIngredients.innerHTML = ''
-for (let i = 0; i < ingredientsTabFinal.length; i ++) {
+for (let i = 0; i < 29; i ++) {
   console.log('test')
           ListGroupIngredients.innerHTML += 
           `<li class="list-group-item">${ingredientsTabFinal[i]}</li>`
