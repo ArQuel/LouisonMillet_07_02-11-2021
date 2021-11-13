@@ -9,6 +9,11 @@ nav h1, nav .h1 {
   color: #D04F4F;
 }
 
+.recherches-section {
+  display: flex;
+  justify-content: space-around;
+}
+
 .container-ingredients div {
   background-color: #3282F7;
   color: white;
@@ -140,6 +145,21 @@ nav h1, nav .h1 {
 
 .list-group-item:nth-child(0) {
   border: 0px;
+}
+
+.tag {
+  display: flex;
+  background-color: blue;
+  color: white;
+  width: 100px;
+  border-radius: 25px;
+  justify-content: center;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.tags {
+  display: flex;
 }
 
 /*!

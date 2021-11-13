@@ -1,5 +1,8 @@
 // Section des containers
-
+.recherches-section {
+  display: flex;
+  justify-content: space-around;
+}
 
 // Container ingredients
 .container-ingredients div { 

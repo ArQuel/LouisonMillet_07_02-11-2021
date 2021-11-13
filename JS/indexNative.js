@@ -31,15 +31,12 @@ for (let i = 0; i < recipes.length; i ++) {
 
 let ingredientsTabFinal = formatList(ingredientsTab)
 
-console.log(ingredientsTabFinal)
 
 let applianceTabFinal = formatList(applianceTab)
 
-console.log(applianceTabFinal)
 
 let ustensilsTabFinal = formatList(ustensilsTab)
 
-console.log(ustensilsTabFinal)
 
 
 // Afficher les ingrédients dans la liste
@@ -52,10 +49,20 @@ const ListGroupIngredients = document.querySelector('.ingredients-list')
 boutonIngredients.addEventListener('click', (e) => {
   ListGroupIngredients.innerHTML = ''
 for (let i = 0; i < 30; i ++) {
-  console.log('test')
           ListGroupIngredients.innerHTML += 
           `<div class="list-group-item">${ingredientsTabFinal[i][0].toUpperCase() +  
             ingredientsTabFinal[i].slice(1)}</div>`
+            let item = document.querySelectorAll('.list-group-item')
+            for (let i = 0; i < item.length; i++) {
+              item[i].addEventListener('click', (e) => {
+                let tagContainer = document.querySelector('.tags')
+                tagContainer.innerHTML += `<div class="tag">
+                  <p>${item[i].innerText}</p>
+                </div>`
+                // Retirer le tag de la liste
+                ingredientsTabFinal.splice(1, i);
+              })
+            }
 }
 })
 
@@ -69,6 +76,15 @@ for (let i = 0; i < applianceTabFinal.length; i ++) {
           ListGroupAppliance.innerHTML += 
           `<div class="list-group-item">${applianceTabFinal[i][0].toUpperCase() +  
             applianceTabFinal[i].slice(1)}</div>`
+            let item = document.querySelectorAll('.list-group-item')
+            for (let i = 0; i < item.length; i++) {
+              item[i].addEventListener('click', (e) => {
+                let tagContainer = document.querySelector('.tag')
+                tagContainer.innerHTML += `<p>${item[i].innerText}</p>`
+                // Retirer le tag de la liste
+                ingredientsTabFinal.splice(1, i);
+              })
+            }
 }
 })
 
@@ -81,6 +97,15 @@ for (let i = 0; i < ustensilsTabFinal.length; i ++) {
           ListGroupUstensils.innerHTML += 
           `<div class="list-group-item">${ustensilsTabFinal[i][0].toUpperCase() +  
             ustensilsTabFinal[i].slice(1)}</div>`
+            let item = document.querySelectorAll('.list-group-item')
+            for (let i = 0; i < item.length; i++) {
+              item[i].addEventListener('click', (e) => {
+                let tagContainer = document.querySelector('.tag')
+                tagContainer.innerHTML += `<p>${item[i].innerText}</p>`
+                // Retirer le tag de la liste
+                ingredientsTabFinal.splice(1, i);
+              })
+            }
 }
 })
 
@@ -88,7 +113,6 @@ function formatList(list){
   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
 let tmp = list.join('~').toLowerCase()
 const newList = tmp.split('~')
-console.log('ma liste', list)
 // Pour la deuxième partie
 // const newList = list.map(elt => elt.toLowerCase())
 return Array.from(new Set(newList))
