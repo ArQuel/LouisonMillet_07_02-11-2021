@@ -47,25 +47,40 @@ const ListGroupIngredients = document.querySelector('.ingredients-list')
 //   ListGroupIngredients.innerHTML = ingredientsTabFinal.map(elt =>  `<li class="list-group-item">${elt}</li>` ).join('')
 // })
 boutonIngredients.addEventListener('click', (e) => {
-  ListGroupIngredients.innerHTML = ''
-for (let i = 0; i < 30; i ++) {
-          ListGroupIngredients.innerHTML += 
-          `<div class="list-group-item">${ingredientsTabFinal[i][0].toUpperCase() +  
-            ingredientsTabFinal[i].slice(1)}</div>`
-            let item = document.querySelectorAll('.list-group-item')
-            for (let i = 0; i < item.length; i++) {
-              item[i].addEventListener('click', (e) => {
-                let tagContainer = document.querySelector('.tags')
-                tagContainer.innerHTML += `<div class="tag">
-                  <p>${item[i].innerText}</p>
-                </div>`
-                // Retirer le tag de la liste
-                ingredientsTabFinal.splice(1, i);
-              })
-            }
-}
+  actualiserTableau()
 })
 
+function actualiserTableau() {
+  ListGroupIngredients.innerHTML = ''
+  for (let i = 0; i < 30; i ++) {
+            ListGroupIngredients.innerHTML += 
+            `<div class="list-group-item ingredients">${ingredientsTabFinal[i][0].toUpperCase() +  
+              ingredientsTabFinal[i].slice(1)}</div>`
+              let item = document.querySelectorAll('.ingredients')
+              for (let i = 0; i < item.length; i++) {
+                item[i].addEventListener('click', (e) => {
+                  let tagContainer = document.querySelector('.tags')
+                  tagContainer.innerHTML += `<div class="tag">
+                    <p>${item[i].innerText}</p>
+                    <span class="cross-ingredients">X</span>
+                  </div>`
+                  // Retirer le tag de la liste
+                  ingredientsTabFinal.splice(i, i);
+                  let cross = document.querySelectorAll('.cross-ingredients')
+                  for (let j = 0; j < cross.length; j++){
+                    cross[j].addEventListener('click', (e) => {
+                      let tagElt = cross[j].parentNode
+                      let value = tagElt.firstElementChild.innerText
+                      ingredientsTabFinal.push(value)
+                      tagContainer.remove(tagElt)
+                      actualiserTableau()
+                    })
+                  }
+                })
+              }
+  }
+
+}
 
 // Afficher les appareils dans la liste
 const boutonAppliance = document.querySelector('.container-appareil')
@@ -74,15 +89,17 @@ boutonAppliance.addEventListener('click', (e) => {
   ListGroupAppliance.innerHTML = ''
 for (let i = 0; i < applianceTabFinal.length; i ++) {
           ListGroupAppliance.innerHTML += 
-          `<div class="list-group-item">${applianceTabFinal[i][0].toUpperCase() +  
+          `<div class="list-group-item appareils">${applianceTabFinal[i][0].toUpperCase() +  
             applianceTabFinal[i].slice(1)}</div>`
-            let item = document.querySelectorAll('.list-group-item')
+            let item = document.querySelectorAll('.appareils')
             for (let i = 0; i < item.length; i++) {
               item[i].addEventListener('click', (e) => {
-                let tagContainer = document.querySelector('.tag')
-                tagContainer.innerHTML += `<p>${item[i].innerText}</p>`
+                let tagContainer = document.querySelector('.tags')
+                tagContainer.innerHTML += `<div class="tag"><p>${item[i].innerText}</p><span class="cross-appareils">X</span></div>`
                 // Retirer le tag de la liste
-                ingredientsTabFinal.splice(1, i);
+                applianceTabFinal.splice(i, i);
+                let cross = document.querySelectorAll('.cross-appareils')
+
               })
             }
 }
@@ -95,15 +112,16 @@ boutonUstensils.addEventListener('click', (e) => {
   ListGroupUstensils.innerHTML = ''
 for (let i = 0; i < ustensilsTabFinal.length; i ++) {
           ListGroupUstensils.innerHTML += 
-          `<div class="list-group-item">${ustensilsTabFinal[i][0].toUpperCase() +  
+          `<div class="list-group-item ustensils">${ustensilsTabFinal[i][0].toUpperCase() +  
             ustensilsTabFinal[i].slice(1)}</div>`
-            let item = document.querySelectorAll('.list-group-item')
+            let item = document.querySelectorAll('.ustensils')
             for (let i = 0; i < item.length; i++) {
               item[i].addEventListener('click', (e) => {
-                let tagContainer = document.querySelector('.tag')
-                tagContainer.innerHTML += `<p>${item[i].innerText}</p>`
+                let tagContainer = document.querySelector('.tags')
+                tagContainer.innerHTML += `<div class="tag"><p>${item[i].innerText}</p><span class="cross-ustensils">X</span></div>`
                 // Retirer le tag de la liste
-                ingredientsTabFinal.splice(1, i);
+                ustensilsTabFinal.splice(i, i);
+                let cross = document.querySelectorAll('.cross-ustensils')
               })
             }
 }
