@@ -41,45 +41,47 @@ let ustensilsTabFinal = formatList(ustensilsTab)
 
 // Afficher les ingrédients dans la liste
 const boutonIngredients = document.querySelector('.container-ingredients')
-const ListGroupIngredients = document.querySelector('.ingredients-list')
 // Pour la deuxième partie
 // boutonIngredients.addEventListener('click', (e) => {
 //   ListGroupIngredients.innerHTML = ingredientsTabFinal.map(elt =>  `<li class="list-group-item">${elt}</li>` ).join('')
 // })
 boutonIngredients.addEventListener('click', (e) => {
-  actualiserTableau()
+  // Ajouter des Elts dans le html de ListGroupIngredients déploie les autres containers 
+  const ListGroupIngredients = document.querySelector('.ingredients-list')
+  actualiserTableau(ListGroupIngredients, ingredientsTabFinal)
 })
 
-function actualiserTableau() {
-  ListGroupIngredients.innerHTML = ''
+function actualiserTableau(list, currentTab) {
+  list.innerHTML = ''
   for (let i = 0; i < 30; i ++) {
-            ListGroupIngredients.innerHTML += 
-            `<div class="list-group-item ingredients">${ingredientsTabFinal[i][0].toUpperCase() +  
-              ingredientsTabFinal[i].slice(1)}</div>`
-              let item = document.querySelectorAll('.ingredients')
-              for (let i = 0; i < item.length; i++) {
-                item[i].addEventListener('click', (e) => {
+            list.innerHTML += 
+            `<div class="list-group-item ingredients">${currentTab[i][0].toUpperCase() +  
+              currentTab[i].slice(1)}</div>`
+              // Comment faire pour réutiliser cette fonction avec ustensils et appareils ?
+              let items = document.querySelectorAll('.ingredients')
+              for (let i = 0; i < items.length; i++) {
+                items[i].addEventListener('click', (e) => {
                   let tagContainer = document.querySelector('.tags')
                   tagContainer.innerHTML += `<div class="tag">
-                    <p>${item[i].innerText}</p>
+                    <p>${items[i].innerText}</p>
                     <span class="cross-ingredients">X</span>
                   </div>`
                   // Retirer le tag de la liste
-                  ingredientsTabFinal.splice(i, i);
+                  currentTab.splice(i, i);
                   let cross = document.querySelectorAll('.cross-ingredients')
                   for (let j = 0; j < cross.length; j++){
                     cross[j].addEventListener('click', (e) => {
                       let tagElt = cross[j].parentNode
                       let value = tagElt.firstElementChild.innerText
-                      ingredientsTabFinal.push(value)
-                      tagContainer.remove(tagElt)
-                      actualiserTableau()
+                      console.log(tagElt)
+                      currentTab.push(value)
+                      tagElt.parentNode.removeChild(tagElt)
+                      actualiserTableau(list, currentTab, items)
                     })
                   }
                 })
               }
   }
-
 }
 
 // Afficher les appareils dans la liste
