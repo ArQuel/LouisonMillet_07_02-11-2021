@@ -100,17 +100,20 @@ function displayList (list, currentTab, tabName) {
                   </div>`
                   // Retirer le tag de la liste
                   currentTab.splice(i, 1);
+
                   let cross = document.querySelectorAll(`.cross-${tabName}`)
                   for (let j = 0; j < cross.length; j++){
                     cross[j].addEventListener('click', (e) => {
                       let tagElt = cross[j].parentNode
                       let value = tagElt.firstElementChild.innerText
-                      console.log(tagElt)
                       currentTab.push(value)
                       tagElt.parentNode.removeChild(tagElt)
                       displayList(list, currentTab, tabName)
                     })
                   }
+                  let search = items[i].innerText
+                  let result = getRecipesWithIngredient(recipes, search)
+                  displayCards(result)
                 })
               }
   }
@@ -121,7 +124,8 @@ function getRecipesWithIngredient (recipes, search) {
   let recipesWithIngredient = []
   for (let index = 0; index < recipes.length; index ++) {
     const recipe = recipes[index]
-    for (let i = 0; i < recipe.length; i++) {
+
+    for (let i = 0; i < recipe.ingredients.length; i ++) {
       let ingredient = recipe.ingredients[i].ingredient;
       if (ingredient === search) {
         recipesWithIngredient.push(recipe)
@@ -143,6 +147,30 @@ function dropUp(ctnElt){
       ctnElt.classList.add("active")
     }
 })
+}
+
+function displayCards (result) {
+  const cardsCtn = document.querySelector('.cards')
+  for (let i = 0; i < result.length; i ++){
+    let recette = result[i]
+    console.log(recette)
+    cardsCtn.innerHTML += `<div class="cards">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
+      <div class="card-body" id="${recette.id}">
+        <h5 class="card-title">${recette.name}</h5>
+        <p class="card-text">${recette.description}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>`
+    for (let j = 0; j < recette.ingredients.length; j ++){
+      let ingredient = recette.ingredients[j].ingredient
+    const cardBody = document.getElementById(recette.id)
+    cardBody.innerHTML += `<p class="card-text">${ingredient}</p>`
+
+    }
+  }
 }
 
 
