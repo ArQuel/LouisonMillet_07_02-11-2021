@@ -153,9 +153,8 @@ function displayCards (result) {
   const cardsCtn = document.querySelector('.cards')
   for (let i = 0; i < result.length; i ++){
     let recette = result[i]
-    console.log(recette)
-    cardsCtn.innerHTML += `<div class="cards">
-    <div class="card" style="width: 18rem;">
+    cardsCtn.innerHTML += `
+    <div class="card" id="${recette.id}" style="width: 18rem;">
       <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
       <div class="card-body" id="${recette.id}">
         <h5 class="card-title">${recette.name}</h5>
@@ -163,7 +162,7 @@ function displayCards (result) {
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>
-  </div>`
+`
     for (let j = 0; j < recette.ingredients.length; j ++){
       let ingredient = recette.ingredients[j].ingredient
     const cardBody = document.getElementById(recette.id)
