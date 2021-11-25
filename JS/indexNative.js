@@ -3,7 +3,8 @@ import recipes from './recipes.js'
 let ingredientsTab = []
 let ustensilsTab = []
 let applianceTab = []
-
+let filtredRecipes = recipes;
+let selectedTags = []
 
 
 
@@ -45,8 +46,11 @@ const containerIngredients = document.querySelector('.container-ingredients')
 const containerAppareils = document.querySelector('.container-appareil')
 const containerUstensils = document.querySelector('.container-ustensil')
 
+
+ 
+  displayCards(filtredRecipes)
   addEventsTo(containerIngredients, containerAppareils, containerUstensils , iFinal, aFinal, uFinal)
-  // displayCard()
+ 
 }
 
 
@@ -64,7 +68,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   containerIngredients.addEventListener('click', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
     displayList(ListGroupIngredients, iFinal, 'ingredients')
-    dropUp(containerIngredients)
+    
   })
 
   // Afficher les appareils dans la liste
@@ -82,6 +86,11 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     dropUp(containerUstensils)
   })
 
+  dropUp(containerIngredients)
+  dropUp(containerAppareils)
+  dropUp(containerUstensils)
+
+  
 }
 
 
@@ -94,26 +103,29 @@ function displayList (list, currentTab, tabName) {
               for (let i = 0; i < items.length; i++) {
                 items[i].addEventListener('click', (e) => {
                   let tagContainer = document.querySelector('.tags')
-                  tagContainer.innerHTML += `<div class="tag">
+                  tagContainer.innerHTML += `<div class="tag" data-index="${selectedTags.length}">
                     <p>${items[i].innerText}</p>
                     <span class="cross-${tabName}">X</span>
                   </div>`
+                  selectedTags.push(items[i].innerText)
                   // Retirer le tag de la liste
                   currentTab.splice(i, 1);
 
-                  let cross = document.querySelectorAll(`.cross-${tabName}`)
-                  for (let j = 0; j < cross.length; j++){
-                    cross[j].addEventListener('click', (e) => {
-                      let tagElt = cross[j].parentNode
+                  let cross = tagContainer.lastChild.querySelector('span')
+                
+                    cross.addEventListener('click', (e) => {
+                      console.log(e.target)
+                      let tagElt = cross.parentNode
                       let value = tagElt.firstElementChild.innerText
                       currentTab.push(value)
                       tagElt.parentNode.removeChild(tagElt)
+
+                      selectedTags.splice(e.target.closest('.tag').dataset.index, 1)
                       displayList(list, currentTab, tabName)
                     })
-                  }
-                  let search = items[i].innerText
-                  let result = getRecipesWithIngredient(recipes, search)
-                  displayCards(result)
+                    let search = items[i].innerText
+                   filtredRecipes = [...getRecipesWithIngredient(filtredRecipes, search)]
+                  displayCards(filtredRecipes)
                 })
               }
   }
@@ -139,34 +151,44 @@ function dropUp(ctnElt){
   document.addEventListener('click', function(event) {
     let isClickInsideElement = ctnElt.contains(event.target)
     if (!isClickInsideElement) {
-      console.log('pas dedans')
       ctnElt.classList.remove("active")
     }
     else {
-      console.log('dedans')
       ctnElt.classList.add("active")
     }
 })
 }
 
 function displayCards (result) {
+  console.log(result)
   const cardsCtn = document.querySelector('.cards')
+  cardsCtn.innerHTML = ''
   for (let i = 0; i < result.length; i ++){
     let recette = result[i]
     cardsCtn.innerHTML += `
-    <div class="card" id="${recette.id}" style="width: 18rem;">
+    <div class="card-recipe" id="${recette.id}">
       <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
       <div class="card-body" id="${recette.id}">
         <h5 class="card-title">${recette.name}</h5>
-        <p class="card-text">${recette.description}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h4> <i class="fas fa-clock"></i> ${recette.time} min</h4>
+        <div class="card-text">
+        ${recette.description}
+        </div>
       </div>
     </div>
 `
     for (let j = 0; j < recette.ingredients.length; j ++){
+      const cardBody = document.getElementById(recette.id)
       let ingredient = recette.ingredients[j].ingredient
-    const cardBody = document.getElementById(recette.id)
-    cardBody.innerHTML += `<p class="card-text">${ingredient}</p>`
+      let quantity = recette.ingredients[j].quantity
+      let unit = recette.ingredients[j].unit
+      if (quantity === undefined || unit === undefined) {
+        cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b></p>`
+      } else {
+        cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b> : ${quantity}${unit}</p>`
+      }
+
+
 
     }
   }

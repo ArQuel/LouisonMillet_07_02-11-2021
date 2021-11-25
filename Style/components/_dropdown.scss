@@ -14,21 +14,22 @@
   flex: 1 1 180px;
 }
 
-.active{
-  max-height: 300px;
-  overflow-y: scroll;
-}
 
 .container-ingredients{
 
   background-color: $secondary-color;
-  max-width: 600px;
+  max-width: 200px;
+  max-height: 50px;
+  overflow: hidden;
   input {
     height: 50px;
     color: white;
     background-color: $secondary-color;
     -webkit-appearance: none;
-    width: 200px;
+    max-width: 200px;
+    outline-style: none;
+    border: none;
+    padding-left: 20px;
   }
   
   input:active{
@@ -80,13 +81,18 @@
 
 .container-appareil{
   background-color: $tertiary-color;
-  max-width: 600px;
+  max-width: 200px;
+  max-height: 50px;
+  overflow: hidden;
   input {
     height: 50px;
     color: white;
     background-color: $tertiary-color;
     -webkit-appearance: none;
-    width: 550px;
+    width: 200px;
+    outline-style: none;
+    border: none;
+    padding-left: 20px;
   }
   
   input:active{
@@ -99,11 +105,6 @@
     opacity: 0.7;
   }
 
-  .active{
-    max-height: 300px;
-    overflow-y: scroll;
-  }
-
   .appareils {
     cursor: pointer;
   }
@@ -113,7 +114,7 @@
 .appareil-list {
   background-color: $tertiary-color;
   display: flex;
-  max-width: 600px;
+  max-width: 550px;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -137,14 +138,19 @@
 
 .container-ustensil{
   background-color: $quadri-color;
-  max-width: 600px;
+  max-width: 200px;
+  max-height: 50px;
+  overflow: hidden;
 
   input {
     height: 50px;
     color: white;
     background-color: $quadri-color;
     -webkit-appearance: none;
-    width: 550px;
+    width: 200px;
+    outline-style: none;
+    border: none;
+    padding-left: 20px;
   }
 
   input:active{
@@ -152,10 +158,12 @@
     -webkit-appearance: none
   }
 
-  .active{
-    max-height: 300px;
-    overflow-y: scroll;
+  input::placeholder{
+    color: #FFFFFF;
+    opacity: 0.7;
   }
+
+
 
   .ustensils {
     cursor: pointer
@@ -177,4 +185,11 @@
 
 .list-group-item:nth-child(0) {
   border: 0px;
+}
+
+
+.active{
+  max-width: 600px;
+  max-height: 300px;
+  overflow-y: scroll;
 }

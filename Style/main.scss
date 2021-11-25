@@ -8,7 +8,8 @@
 
 // 2. Vendors
 @import
-  'vendors/normalize';
+  'vendors/normalize',
+  'vendors/fontawesome.scss';
 
 // 3. Base stuff
 @import
@@ -42,3 +43,4 @@
 // 8. Bootstrap
 @import
  '../node_modules/bootstrap/scss/bootstrap';
+
