@@ -6099,7 +6099,6 @@ nav h1, nav .h1 {
 
 .recherches-section {
   display: flex;
-  justify-content: space-around;
   margin-top: 50px;
   align-items: flex-start;
 }
@@ -6116,6 +6115,7 @@ nav h1, nav .h1 {
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 98px;
 }
 
 .container-ingredients input {
@@ -6171,6 +6171,7 @@ nav h1, nav .h1 {
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 50px;
 }
 
 .container-appareil input {
@@ -6226,6 +6227,7 @@ nav h1, nav .h1 {
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 50px;
 }
 
 .container-ustensil input {

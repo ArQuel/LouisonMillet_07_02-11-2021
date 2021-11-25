@@ -1,7 +1,6 @@
 // Section des containers
 .recherches-section {
   display: flex;
-  justify-content: space-around;
   margin-top: 50px;
   align-items: flex-start;
 }
@@ -21,6 +20,7 @@
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 98px;
   input {
     height: 50px;
     color: white;
@@ -84,6 +84,7 @@
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 50px;
   input {
     height: 50px;
     color: white;
@@ -141,6 +142,7 @@
   max-width: 200px;
   max-height: 50px;
   overflow: hidden;
+  margin-left: 50px;
 
   input {
     height: 50px;
