@@ -6141,6 +6141,7 @@ nav h1, nav .h1 {
 
 .container-ingredients .ingredients {
   cursor: pointer;
+  background-color: #3282F7;
 }
 
 .ingredients-list {
@@ -6197,6 +6198,7 @@ nav h1, nav .h1 {
 
 .container-appareil .appareils {
   cursor: pointer;
+  background-color: #68D9A4;
 }
 
 .appareil-list {
@@ -6253,6 +6255,7 @@ nav h1, nav .h1 {
 
 .container-ustensil .ustensils {
   cursor: pointer;
+  background-color: #ED6454;
 }
 
 .ustensil-list {
@@ -6340,7 +6343,6 @@ form {
 
 .tag {
   display: flex;
-  background-color: blue;
   color: white;
   width: max-content;
   padding-left: 20px;
@@ -6369,6 +6371,21 @@ span {
   position: absolute;
   right: 15px;
   top: 5px;
+}
+
+.tag-ingredients {
+  cursor: pointer;
+  background-color: #3282F7;
+}
+
+.tag-appareils {
+  cursor: pointer;
+  background-color: #68D9A4;
+}
+
+.tag-ustensils {
+  cursor: pointer;
+  background-color: #ED6454;
 }
 
 /*!

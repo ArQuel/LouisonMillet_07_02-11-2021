@@ -103,26 +103,25 @@ function displayList (list, currentTab, tabName) {
               for (let i = 0; i < items.length; i++) {
                 items[i].addEventListener('click', (e) => {
                   let tagContainer = document.querySelector('.tags')
-                  tagContainer.innerHTML += `<div class="tag" data-index="${selectedTags.length}">
+                  tagContainer.innerHTML += `<div class="tag tag-${tabName}" data-index="${selectedTags.length}">
                     <p>${items[i].innerText}</p>
                     <span class="cross-${tabName}">X</span>
                   </div>`
                   selectedTags.push(items[i].innerText)
                   // Retirer le tag de la liste
                   currentTab.splice(i, 1);
-
-                  let cross = tagContainer.lastChild.querySelector('span')
-                
-                    cross.addEventListener('click', (e) => {
-                      console.log(e.target)
-                      let tagElt = cross.parentNode
-                      let value = tagElt.firstElementChild.innerText
+                  let cross = tagContainer.querySelectorAll('span')
+                  for (let index = 0; index < cross.length; index++){
+                    cross[index].addEventListener('click', (e) => {
+                      let tagElt = cross[index].parentNode
+                      console.log(tagElt)
+                      let value = tagElt.innerText
                       currentTab.push(value)
                       tagElt.parentNode.removeChild(tagElt)
-
                       selectedTags.splice(e.target.closest('.tag').dataset.index, 1)
                       displayList(list, currentTab, tabName)
                     })
+                  }
                     let search = items[i].innerText
                    filtredRecipes = [...getRecipesWithIngredient(filtredRecipes, search)]
                   displayCards(filtredRecipes)
@@ -160,7 +159,6 @@ function dropUp(ctnElt){
 }
 
 function displayCards (result) {
-  console.log(result)
   const cardsCtn = document.querySelector('.cards')
   cardsCtn.innerHTML = ''
   for (let i = 0; i < result.length; i ++){
@@ -187,9 +185,6 @@ function displayCards (result) {
       } else {
         cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b> : ${quantity}${unit}</p>`
       }
-
-
-
     }
   }
 }

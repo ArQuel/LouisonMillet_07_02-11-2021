@@ -1,6 +1,5 @@
 .tag {
     display: flex;
-    background-color: blue;
     color: white;
     width: max-content;
     padding-left: 20px;
@@ -30,3 +29,18 @@ span {
     right: 15px;
     top: 5px;
 }
+
+.tag-ingredients {
+    cursor: pointer;
+    background-color: $secondary-color;
+  }
+
+.tag-appareils {
+    cursor: pointer;
+    background-color: $tertiary-color;
+  }
+
+.tag-ustensils {
+    cursor: pointer;
+    background-color: $quadri-color;
+  }

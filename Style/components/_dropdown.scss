@@ -46,6 +46,7 @@
 
   .ingredients {
     cursor: pointer;
+    background-color: $secondary-color;
   }
 }
 
@@ -108,6 +109,7 @@
 
   .appareils {
     cursor: pointer;
+    background-color: $tertiary-color;
   }
 }
 
@@ -168,7 +170,8 @@
 
 
   .ustensils {
-    cursor: pointer
+    cursor: pointer;
+    background-color: $quadri-color;
   }
 }
 
