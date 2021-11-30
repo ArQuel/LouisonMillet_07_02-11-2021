@@ -1,0 +1,14 @@
+.no-result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    background-color: #f9eac3;
+    p {
+        font-size: large;
+        font-weight: bold;
+    }
+}

@@ -122,8 +122,16 @@ function displayList (list, currentTab, tabName) {
                       displayList(list, currentTab, tabName)
                     })
                   }
-                    let search = items[i].innerText
-                   filtredRecipes = [...getRecipesWithIngredient(filtredRecipes, search)]
+                   let search = items[i].innerText
+                   let filtredIngredients, filtredAppliances, filtredUstensils
+                   // Comment faire les troix en même temps ?
+                   filtredIngredients = [...getRecipesWithIngredient(filtredRecipes, search)]
+                   console.log(filtredIngredients)
+                   filtredAppliances = [... getRecipesWithAppliance(filtredRecipes, search)]
+                   console.log(filtredAppliances)
+                   filtredUstensils = [... getRecipesWithUstensil(filtredRecipes, search)]
+                   console.log(filtredUstensils)
+                   filtredRecipes = filtredIngredients.concat(filtredAppliances.concat(filtredUstensils))
                   displayCards(filtredRecipes)
                 })
               }
@@ -135,7 +143,6 @@ function getRecipesWithIngredient (recipes, search) {
   let recipesWithIngredient = []
   for (let index = 0; index < recipes.length; index ++) {
     const recipe = recipes[index]
-
     for (let i = 0; i < recipe.ingredients.length; i ++) {
       let ingredient = recipe.ingredients[i].ingredient;
       if (ingredient === search) {
@@ -144,6 +151,32 @@ function getRecipesWithIngredient (recipes, search) {
     }
   }
   return [... new Set(recipesWithIngredient)]
+}
+
+function getRecipesWithAppliance (recipes, search) {
+  let recipesWithAppliance= []
+  for (let index = 0; index < recipes.length; index ++) {
+    const recipe = recipes[index]
+      let appliance = recipe.appliance;
+      if (appliance === search) {
+        recipesWithAppliance.push(recipe)
+      }
+  }
+  return [... new Set(recipesWithAppliance)]
+}
+
+function getRecipesWithUstensil (recipes, search) {
+  let recipesWithUstensil = []
+  for (let index = 0; index < recipes.length; index ++) {
+    const recipe = recipes[index]
+      let ustensil = recipe.ustensils;
+      for (let i = 0; i < ustensil.length; i++){
+        if (ustensil[i] === search.toLowerCase()) {
+          recipesWithUstensil.push(recipe)
+        }
+      }
+  }
+  return [... new Set(recipesWithUstensil)]
 }
 
 function dropUp(ctnElt){
@@ -159,34 +192,43 @@ function dropUp(ctnElt){
 }
 
 function displayCards (result) {
-  const cardsCtn = document.querySelector('.cards')
-  cardsCtn.innerHTML = ''
-  for (let i = 0; i < result.length; i ++){
-    let recette = result[i]
-    cardsCtn.innerHTML += `
-    <div class="card-recipe" id="${recette.id}">
-      <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
-      <div class="card-body" id="${recette.id}">
-        <h5 class="card-title">${recette.name}</h5>
-        <h4> <i class="fas fa-clock"></i> ${recette.time} min</h4>
-        <div class="card-text">
-        ${recette.description}
+  console.log(result)
+  if (result.length === 0){
+    let noResultCtn = document.querySelector('.empty')
+    noResultCtn.innerHTML += `
+    <div class="no-result">
+    <p> Désolé nous n'avons pas trouvé de résultats correspondant à votre recherche </p>
+    </div>`
+
+  } 
+    const cardsCtn = document.querySelector('.cards')
+    cardsCtn.innerHTML = ''
+    for (let i = 0; i < result.length; i ++){
+      let recette = result[i]
+      cardsCtn.innerHTML += `
+      <div class="card-recipe" id="${recette.id}">
+        <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
+        <div class="card-body" id="${recette.id}">
+          <h5 class="card-title">${recette.name}</h5>
+          <h4> <i class="fas fa-clock"></i> ${recette.time} min</h4>
+          <div class="card-text">
+          ${recette.description}
+          </div>
         </div>
       </div>
-    </div>
-`
-    for (let j = 0; j < recette.ingredients.length; j ++){
-      const cardBody = document.getElementById(recette.id)
-      let ingredient = recette.ingredients[j].ingredient
-      let quantity = recette.ingredients[j].quantity
-      let unit = recette.ingredients[j].unit
-      if (quantity === undefined || unit === undefined) {
-        cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b></p>`
-      } else {
-        cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b> : ${quantity}${unit}</p>`
+  `
+      for (let j = 0; j < recette.ingredients.length; j ++){
+        const cardBody = document.getElementById(recette.id)
+        let ingredient = recette.ingredients[j].ingredient
+        let quantity = recette.ingredients[j].quantity
+        let unit = recette.ingredients[j].unit
+        if (quantity === undefined || unit === undefined) {
+          cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b></p>`
+        } else {
+          cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b> : ${quantity} ${unit}</p>`
+        }
       }
     }
-  }
 }
 
 
