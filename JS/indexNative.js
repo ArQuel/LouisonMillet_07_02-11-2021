@@ -64,12 +64,14 @@ return Array.from(new Set(newTab))
 
 
 function addEventsTo (containerIngredients, containerAppareils, containerUstensils, iFinal, aFinal, uFinal) {
+
     // Afficher les ingrédients dans la liste
   containerIngredients.addEventListener('click', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
     displayList(ListGroupIngredients, iFinal, 'ingredients')
   })
 
+      // Recherche section Ingredients
   const inputIngredients = document.querySelector('#Ingredients')
   inputIngredients.addEventListener('keyup', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
@@ -90,6 +92,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     dropUp(containerAppareils)
   })
 
+  // Recherche section Appareils
   const inputAppareils = document.querySelector('#Appareils')
   inputAppareils.addEventListener('keyup', (e) => {
     const ListGroupAppliance = document.querySelector('.appareil-list')
@@ -110,6 +113,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     dropUp(containerUstensils)
   })
 
+  // Recherche section Ustensils
   const inputUstensils = document.querySelector('#Ustensils')
   inputUstensils.addEventListener('keyup', (e) => {
     const ListGroupUstensils = document.querySelector('.ustensil-list')
@@ -131,7 +135,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
 }
 
 
-
+// Affiche les items dans les contenairs
 function displayList (list, currentTab, tabName) {
   list.innerHTML = ''
   for (let i = 0; i < currentTab.length; i ++) {
@@ -143,7 +147,7 @@ function displayList (list, currentTab, tabName) {
   }
 }
 
-
+// Affiche les tags quand cliqués dessus
 function getTags(items, i, tabName, currentTab, list) {
   items[i].addEventListener('click', (e) => {
     let tagContainer = document.querySelector('.tags');
@@ -159,6 +163,7 @@ function getTags(items, i, tabName, currentTab, list) {
   });
 }
 
+// Met à jour les recettes filtrées
 function refreshRecipes(items, i) {
   let search = items[i].innerText;
   let filtredIngredients, filtredAppliances, filtredUstensils;
@@ -173,6 +178,7 @@ function refreshRecipes(items, i) {
   displayCards(filtredRecipes);
 }
 
+// Ajoute un listener sur la croix des tags
 function addCross(tagContainer, currentTab, list, tabName) {
   let cross = tagContainer.querySelectorAll('span');
   for (let index = 0; index < cross.length; index++) {
@@ -188,6 +194,7 @@ function addCross(tagContainer, currentTab, list, tabName) {
   }
 }
 
+// Recherche par ingredients
 function getRecipesWithIngredient (recipes, search) {
   let recipesWithIngredient = []
   for (let index = 0; index < recipes.length; index ++) {
@@ -202,6 +209,7 @@ function getRecipesWithIngredient (recipes, search) {
   return [... new Set(recipesWithIngredient)]
 }
 
+// Recherche par Appareils
 function getRecipesWithAppliance (recipes, search) {
   let recipesWithAppliance= []
   for (let index = 0; index < recipes.length; index ++) {
@@ -214,6 +222,7 @@ function getRecipesWithAppliance (recipes, search) {
   return [... new Set(recipesWithAppliance)]
 }
 
+// Recherche par Ustensils
 function getRecipesWithUstensil (recipes, search) {
   let recipesWithUstensil = []
   for (let index = 0; index < recipes.length; index ++) {
@@ -228,6 +237,7 @@ function getRecipesWithUstensil (recipes, search) {
   return [... new Set(recipesWithUstensil)]
 }
 
+// Afficher/Masquer les listes des sections Ingredients/Appareils/Ustensils
 function dropUp(ctnElt){
   document.addEventListener('click', function(event) {
     let isClickInsideElement = ctnElt.contains(event.target)
@@ -240,6 +250,7 @@ function dropUp(ctnElt){
 })
 }
 
+// Afficher les recettes filtrées
 function displayCards (result) {
   console.log(result)
   if (result.length === 0){
@@ -265,7 +276,7 @@ function displayCards (result) {
           </div>
         </div>
       </div>
-  `
+      `
       for (let j = 0; j < recette.ingredients.length; j ++){
         const cardBody = document.getElementById(recette.id)
         let ingredient = recette.ingredients[j].ingredient
