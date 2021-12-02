@@ -46,31 +46,17 @@ let uFinal = formatTab(ustensilsTab)
 const containerIngredients = document.querySelector('.container-ingredients')
 const containerAppareils = document.querySelector('.container-appareil')
 const containerUstensils = document.querySelector('.container-ustensil')
-const inputSearch = document.querySelector('#Search')
 
 
  
   displayCards(filtredRecipes)
 
-  watchInput(inputSearch);
 
   addEventsTo(containerIngredients, containerAppareils, containerUstensils , iFinal, aFinal, uFinal)
 
 
 }
 
-
-function watchInput(inputSearch) {
-
-  inputSearch.addEventListener('keyup', (e) => {
-    let noResultCtn = document.querySelector('#empty');
-    noResultCtn.innerHTML = ''
-    let search = inputSearch.value.toLowerCase();
-    filtredRecipes = [...getRecipesWithInput(recipes, search)]
-    displayCards(filtredRecipes)
-    verifRecipes(); 
-  })
-}
 
 function formatTab(tab){
   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
@@ -85,9 +71,18 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   const inputIngredients = document.querySelector('#Ingredients')
   const inputAppareils = document.querySelector('#Appareils')
   const inputUstensils = document.querySelector('#Ustensils')
+  const inputSearch = document.querySelector('#Search')
 
-
-
+  // barre de recherche principale
+  inputSearch.addEventListener('keyup', (e) => {
+    let noResultCtn = document.querySelector('#empty');
+    noResultCtn.innerHTML = ''
+    let search = inputSearch.value.toLowerCase();
+    filtredRecipes = [...getRecipesWithInput(recipes, search)]
+    displayCards(filtredRecipes)
+    verifRecipes(); 
+  })
+  
     // Afficher les ingrédients dans la liste
   containerIngredients.addEventListener('click', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
@@ -150,7 +145,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   })
 
 
-
+  
   dropUp(containerIngredients)
   dropUp(containerAppareils)
   dropUp(containerUstensils)
@@ -270,19 +265,22 @@ function getRecipesWithInput (recipes, search) {
   let recipesWithInput = []
   for (let index = 0; index < recipes.length; index ++) {
     const recipe = recipes[index]
+    if (recipe.name.toLowerCase().includes(search)) {
+      recipesWithInput.push(recipe)
+    }
     for (let i = 0; i < recipe.ingredients.length; i ++) {
       let ingredient = recipe.ingredients[i].ingredient;
-      if (ingredient.toLowerCase() === search) {
+      if (ingredient.toLowerCase().includes(search)) {
         recipesWithInput.push(recipe)
       }
     }
     let appliance = recipe.appliance;
-      if (appliance.toLowerCase() === search) {
+      if (appliance.toLowerCase().includes(search)) {
         recipesWithInput.push(recipe)
       }
       let ustensil = recipe.ustensils;
       for (let i = 0; i < ustensil.length; i++){
-        if (ustensil[i].toLowerCase() === search) {
+        if (ustensil[i].toLowerCase().includes(search)) {
           recipesWithInput.push(recipe)
         }
       }
