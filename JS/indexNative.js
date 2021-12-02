@@ -78,11 +78,12 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     let ingredientTabSearch = []
     for (let i = 0; i < iFinal.length; i++) {
       console.log(inputIngredients.value, iFinal[i])
-      if ( inputIngredients.value.toLowerCase() === iFinal[i]){
+      // Faire pareil pour les autres
+      if ( iFinal[i].toLowerCase().includes(inputIngredients.value.toLowerCase())){
         ingredientTabSearch.push(iFinal[i])
-        displayList(ListGroupIngredients, ingredientTabSearch, 'ingredients')
       }
     }
+    displayList(ListGroupIngredients, ingredientTabSearch, 'ingredients')
   })
 
   // Afficher les appareils dans la liste
@@ -99,7 +100,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     let appareilTabSearch = []
     for (let i = 0; i < aFinal.length; i++) {
       console.log(inputAppareils.value, aFinal[i])
-      if ( inputAppareils.value.toLowerCase() === aFinal[i]){
+      if ( inputAppareils.value.toLowerCase().includes(aFinal[i])){
         appareilTabSearch.push(aFinal[i])
         displayList(ListGroupAppliance, appareilTabSearch, 'appareils')
       }
@@ -120,7 +121,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     let ustensilsTabSearch = []
     for (let i = 0; i < uFinal.length; i++) {
       console.log(inputUstensils.value, uFinal[i])
-      if ( inputUstensils.value.toLowerCase() === uFinal[i]){
+      if ( inputUstensils.value.toLowerCase().includes(uFinal[i])){
         ustensilsTabSearch.push(uFinal[i])
         displayList(ListGroupUstensils, ustensilsTabSearch, 'ustensils')
       } 
@@ -184,11 +185,11 @@ function addCross(tagContainer, currentTab, list, tabName) {
   for (let index = 0; index < cross.length; index++) {
     cross[index].addEventListener('click', (e) => {
       let tagElt = cross[index].parentNode;
-      console.log(tagElt);
-      let value = tagElt.innerText;
-      currentTab.push(value);
       tagElt.parentNode.removeChild(tagElt);
       selectedTags.splice(e.target.closest('.tag').dataset.index, 1);
+      tagElt.removeChild(cross[index])
+      let value = tagElt.innerText;
+      currentTab.push(value);
       displayList(list, currentTab, tabName);
     });
   }

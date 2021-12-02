@@ -6277,6 +6277,10 @@ nav h1, nav .h1 {
 .active {
   max-width: 600px;
   max-height: 300px;
+}
+
+.active > div {
+  max-height: 300px;
   overflow-y: scroll;
 }
 
