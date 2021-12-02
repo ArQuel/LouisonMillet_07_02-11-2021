@@ -5,6 +5,7 @@ let ustensilsTab = []
 let applianceTab = []
 let filtredRecipes = recipes;
 let selectedTags = []
+let filtredIngredients, filtredAppliances, filtredUstensils;
 
 
 
@@ -45,14 +46,31 @@ let uFinal = formatTab(ustensilsTab)
 const containerIngredients = document.querySelector('.container-ingredients')
 const containerAppareils = document.querySelector('.container-appareil')
 const containerUstensils = document.querySelector('.container-ustensil')
+const inputSearch = document.querySelector('#Search')
 
 
  
   displayCards(filtredRecipes)
+
+  watchInput(inputSearch);
+
   addEventsTo(containerIngredients, containerAppareils, containerUstensils , iFinal, aFinal, uFinal)
- 
+
+
 }
 
+
+function watchInput(inputSearch) {
+
+  inputSearch.addEventListener('keyup', (e) => {
+    let noResultCtn = document.querySelector('#empty');
+    noResultCtn.innerHTML = ''
+    let search = inputSearch.value.toLowerCase();
+    filtredRecipes = [...getRecipesWithInput(recipes, search)]
+    displayCards(filtredRecipes)
+    verifRecipes(); 
+  })
+}
 
 function formatTab(tab){
   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
@@ -64,20 +82,24 @@ return Array.from(new Set(newTab))
 
 
 function addEventsTo (containerIngredients, containerAppareils, containerUstensils, iFinal, aFinal, uFinal) {
+  const inputIngredients = document.querySelector('#Ingredients')
+  const inputAppareils = document.querySelector('#Appareils')
+  const inputUstensils = document.querySelector('#Ustensils')
+
+
 
     // Afficher les ingrédients dans la liste
   containerIngredients.addEventListener('click', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
     displayList(ListGroupIngredients, iFinal, 'ingredients')
+    inputIngredients.value = ''
   })
 
       // Recherche section Ingredients
-  const inputIngredients = document.querySelector('#Ingredients')
   inputIngredients.addEventListener('keyup', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
     let ingredientTabSearch = []
     for (let i = 0; i < iFinal.length; i++) {
-      console.log(inputIngredients.value, iFinal[i])
       // Faire pareil pour les autres
       if ( iFinal[i].toLowerCase().includes(inputIngredients.value.toLowerCase())){
         ingredientTabSearch.push(iFinal[i])
@@ -91,16 +113,15 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     const ListGroupAppliance = document.querySelector('.appareil-list')
     displayList(ListGroupAppliance, aFinal, 'appareils')
     dropUp(containerAppareils)
+    inputAppareils.value = ''
   })
 
   // Recherche section Appareils
-  const inputAppareils = document.querySelector('#Appareils')
   inputAppareils.addEventListener('keyup', (e) => {
     const ListGroupAppliance = document.querySelector('.appareil-list')
     let appareilTabSearch = []
     for (let i = 0; i < aFinal.length; i++) {
-      console.log(inputAppareils.value, aFinal[i])
-      if ( inputAppareils.value.toLowerCase().includes(aFinal[i])){
+      if (aFinal[i].toLowerCase().includes(inputAppareils.value.toLowerCase())){
         appareilTabSearch.push(aFinal[i])
         displayList(ListGroupAppliance, appareilTabSearch, 'appareils')
       }
@@ -112,21 +133,23 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     const ListGroupUstensils = document.querySelector('.ustensil-list')
     displayList(ListGroupUstensils, uFinal, 'ustensils')
     dropUp(containerUstensils)
+    inputUstensils.value = ''
+
   })
 
   // Recherche section Ustensils
-  const inputUstensils = document.querySelector('#Ustensils')
   inputUstensils.addEventListener('keyup', (e) => {
     const ListGroupUstensils = document.querySelector('.ustensil-list')
     let ustensilsTabSearch = []
     for (let i = 0; i < uFinal.length; i++) {
-      console.log(inputUstensils.value, uFinal[i])
-      if ( inputUstensils.value.toLowerCase().includes(uFinal[i])){
+      if (uFinal[i].includes(inputUstensils.value.toLowerCase())){
         ustensilsTabSearch.push(uFinal[i])
         displayList(ListGroupUstensils, ustensilsTabSearch, 'ustensils')
       } 
     }
   })
+
+
 
   dropUp(containerIngredients)
   dropUp(containerAppareils)
@@ -142,45 +165,40 @@ function displayList (list, currentTab, tabName) {
   for (let i = 0; i < currentTab.length; i ++) {
             list.innerHTML += `<div class="list-group-item ${tabName}">${currentTab[i][0].toUpperCase() + currentTab[i].slice(1)}</div>`              
               let items = document.querySelectorAll(`.${tabName}`)
-              for (let i = 0; i < items.length; i++) {
-                getTags(items, i, tabName, currentTab, list);
+              for (let j = 0; j < items.length; j++) {
+                getTags(items, j, tabName, currentTab, list);
               }
   }
 }
 
 // Affiche les tags quand cliqués dessus
-function getTags(items, i, tabName, currentTab, list) {
-  items[i].addEventListener('click', (e) => {
+function getTags(items, j, tabName, currentTab, list) {
+  items[j].addEventListener('click', (e) => {
     let tagContainer = document.querySelector('.tags');
     tagContainer.innerHTML += `<div class="tag tag-${tabName}" data-index="${selectedTags.length}">
-                    <p>${items[i].innerText}</p>
+                    <p>${items[j].innerText}</p>
                     <span class="cross-${tabName}">X</span>
                   </div>`;
-    selectedTags.push(items[i].innerText);
+    selectedTags.push(items[j].innerText);
     // Retirer le tag de la liste
-    currentTab.splice(i, 1);
+    currentTab.splice(j, 1);
     addCross(tagContainer, currentTab, list, tabName);
-    refreshRecipes(items, i);
+    let search = items[j].innerText;
+    refreshRecipes(search);
   });
 }
 
 // Met à jour les recettes filtrées
-function refreshRecipes(items, i) {
-  let search = items[i].innerText;
-  let filtredIngredients, filtredAppliances, filtredUstensils;
-  // Comment faire les troix en même temps ?
+function refreshRecipes(search) {
   filtredIngredients = [...getRecipesWithIngredient(filtredRecipes, search)];
-  console.log(filtredIngredients);
   filtredAppliances = [...getRecipesWithAppliance(filtredRecipes, search)];
-  console.log(filtredAppliances);
   filtredUstensils = [...getRecipesWithUstensil(filtredRecipes, search)];
-  console.log(filtredUstensils);
   filtredRecipes = filtredIngredients.concat(filtredAppliances.concat(filtredUstensils));
   displayCards(filtredRecipes);
 }
 
 // Ajoute un listener sur la croix des tags
-function addCross(tagContainer, currentTab, list, tabName) {
+function addCross(tagContainer, currentTab) {
   let cross = tagContainer.querySelectorAll('span');
   for (let index = 0; index < cross.length; index++) {
     cross[index].addEventListener('click', (e) => {
@@ -190,7 +208,16 @@ function addCross(tagContainer, currentTab, list, tabName) {
       tagElt.removeChild(cross[index])
       let value = tagElt.innerText;
       currentTab.push(value);
-      displayList(list, currentTab, tabName);
+      filtredRecipes = recipes
+      for (let tagIndex = 0; tagIndex < selectedTags.length; tagIndex++){
+        refreshRecipes(selectedTags[tagIndex])
+      }
+      // Pour la deuxième partie
+      // selectedTags.forEach(tag => {
+      //   console.log(tag)
+      //   filtredRecipes = [... getRecipesWithIngredient(filtredRecipes, tag)]
+      // })
+      displayCards(filtredRecipes)
     });
   }
 }
@@ -238,6 +265,31 @@ function getRecipesWithUstensil (recipes, search) {
   return [... new Set(recipesWithUstensil)]
 }
 
+// Recherche par l'input
+function getRecipesWithInput (recipes, search) {
+  let recipesWithInput = []
+  for (let index = 0; index < recipes.length; index ++) {
+    const recipe = recipes[index]
+    for (let i = 0; i < recipe.ingredients.length; i ++) {
+      let ingredient = recipe.ingredients[i].ingredient;
+      if (ingredient.toLowerCase() === search) {
+        recipesWithInput.push(recipe)
+      }
+    }
+    let appliance = recipe.appliance;
+      if (appliance.toLowerCase() === search) {
+        recipesWithInput.push(recipe)
+      }
+      let ustensil = recipe.ustensils;
+      for (let i = 0; i < ustensil.length; i++){
+        if (ustensil[i].toLowerCase() === search) {
+          recipesWithInput.push(recipe)
+        }
+      }
+  }
+  return [... new Set(recipesWithInput)]
+}
+
 // Afficher/Masquer les listes des sections Ingredients/Appareils/Ustensils
 function dropUp(ctnElt){
   document.addEventListener('click', function(event) {
@@ -253,15 +305,6 @@ function dropUp(ctnElt){
 
 // Afficher les recettes filtrées
 function displayCards (result) {
-  console.log(result)
-  if (result.length === 0){
-    let noResultCtn = document.querySelector('.empty')
-    noResultCtn.innerHTML += `
-    <div class="no-result">
-    <p> Désolé nous n'avons pas trouvé de résultats correspondant à votre recherche </p>
-    </div>`
-
-  } 
     const cardsCtn = document.querySelector('.cards')
     cardsCtn.innerHTML = ''
     for (let i = 0; i < result.length; i ++){
@@ -290,12 +333,26 @@ function displayCards (result) {
         }
       }
     }
+    verifRecipes()
 }
 
+function verifRecipes() {
+  const cardsCtn = document.querySelector('.cards')
+  let noResult = document.getElementById('empty').querySelector('.no-result')
+  let noResultCtn = document.querySelector('#empty');
+  noResultCtn.innerHTML = ''
+  if (cardsCtn.hasChildNodes()) {
+    console.log("a des enfants")
+    noResultCtn.innerHTML = ``
 
-
-
-
+  } else {
+    console.log("a PAS enfants")
+    noResultCtn.innerHTML += `
+    <div class="no-result">
+    <p> Désolé nous n'avons pas trouvé de résultats correspondant à votre recherche </p>
+    </div>`
+  }
+}
 
 //        ---------------------------------------------------------------------- POUR LA PROCHAINE PARTIE --------------------------------------------------------------------------------
 
