@@ -340,11 +340,9 @@ function verifRecipes() {
   let noResultCtn = document.querySelector('#empty');
   noResultCtn.innerHTML = ''
   if (cardsCtn.hasChildNodes()) {
-    console.log("a des enfants")
     noResultCtn.innerHTML = ``
 
   } else {
-    console.log("a PAS enfants")
     noResultCtn.innerHTML += `
     <div class="no-result">
     <p> Désolé nous n'avons pas trouvé de résultats correspondant à votre recherche </p>
