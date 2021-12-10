@@ -6,6 +6,7 @@ let applianceTab = []
 let filtredRecipes = recipes;
 let selectedTags = []
 let filtredIngredients, filtredAppliances, filtredUstensils;
+let mainSearchValue = ""
 
 
 
@@ -77,10 +78,10 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   inputSearch.addEventListener('keyup', (e) => {
     let noResultCtn = document.querySelector('#empty');
     noResultCtn.innerHTML = ''
-    let search = inputSearch.value.toLowerCase();
-    filtredRecipes = [...getRecipesWithInput(recipes, search)]
-    displayCards(filtredRecipes)
-    verifRecipes(); 
+    if (e.target.value.length < mainSearchValue.length) {
+      filtredRecipes = [...recipes]
+    }
+    mainSearch(inputSearch); 
   })
   
     // Afficher les ingrédients dans la liste
@@ -154,6 +155,14 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
 }
 
 
+function mainSearch(inputSearch) {
+  let search = inputSearch.value.toLowerCase();
+  filtredRecipes = [...getRecipesWithInput(filtredRecipes, search)];
+  displayCards(filtredRecipes);
+  verifRecipes();
+  mainSearchValue = search
+}
+
 // Affiche les items dans les contenairs
 function displayList (list, currentTab, tabName) {
   list.innerHTML = ''
@@ -212,9 +221,38 @@ function addCross(tagContainer, currentTab) {
       //   console.log(tag)
       //   filtredRecipes = [... getRecipesWithIngredient(filtredRecipes, tag)]
       // })
-      displayCards(filtredRecipes)
+      const inputSearch = document.querySelector('#Search')
+      mainSearch(inputSearch)
     });
   }
+}
+
+// Recherche par l'input
+function getRecipesWithInput (recipes, search) {
+  let recipesWithInput = []
+  for (let index = 0; index < recipes.length; index ++) {
+    const recipe = recipes[index]
+    if (recipe.name.toLowerCase().includes(search)) {
+      recipesWithInput.push(recipe)
+    }
+    for (let i = 0; i < recipe.ingredients.length; i ++) {
+      let ingredient = recipe.ingredients[i].ingredient;
+      if (ingredient.toLowerCase().includes(search)) {
+        recipesWithInput.push(recipe)
+      }
+    }
+    let appliance = recipe.appliance;
+      if (appliance.toLowerCase().includes(search)) {
+        recipesWithInput.push(recipe)
+      }
+      let ustensil = recipe.ustensils;
+      for (let i = 0; i < ustensil.length; i++){
+        if (ustensil[i].toLowerCase().includes(search)) {
+          recipesWithInput.push(recipe)
+        }
+      }
+  }
+  return [... new Set(recipesWithInput)]
 }
 
 // Recherche par ingredients
@@ -260,33 +298,7 @@ function getRecipesWithUstensil (recipes, search) {
   return [... new Set(recipesWithUstensil)]
 }
 
-// Recherche par l'input
-function getRecipesWithInput (recipes, search) {
-  let recipesWithInput = []
-  for (let index = 0; index < recipes.length; index ++) {
-    const recipe = recipes[index]
-    if (recipe.name.toLowerCase().includes(search)) {
-      recipesWithInput.push(recipe)
-    }
-    for (let i = 0; i < recipe.ingredients.length; i ++) {
-      let ingredient = recipe.ingredients[i].ingredient;
-      if (ingredient.toLowerCase().includes(search)) {
-        recipesWithInput.push(recipe)
-      }
-    }
-    let appliance = recipe.appliance;
-      if (appliance.toLowerCase().includes(search)) {
-        recipesWithInput.push(recipe)
-      }
-      let ustensil = recipe.ustensils;
-      for (let i = 0; i < ustensil.length; i++){
-        if (ustensil[i].toLowerCase().includes(search)) {
-          recipesWithInput.push(recipe)
-        }
-      }
-  }
-  return [... new Set(recipesWithInput)]
-}
+
 
 // Afficher/Masquer les listes des sections Ingredients/Appareils/Ustensils
 function dropUp(ctnElt){
