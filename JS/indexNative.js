@@ -16,27 +16,7 @@ main();
 
 function main (){
   // Aller chercher les ingrédients et les mettre dans un tableau
-for (let i = 0; i < recipes.length; i ++) {
-  for (let j = 0; j < recipes[i].ingredients.length; j++) {
-        ingredientsTab.push(recipes[i].ingredients[j].ingredient)        
-  }
-}
-
-// Aller chercher les appareils et les mettre dans un tableau
-for (let i = 0; i < recipes.length; i ++) {
-  applianceTab.push(recipes[i].appliance)
-}
-
-// Aller chercher les ustensiles et les mettre dans un tableau
-for (let i = 0; i < recipes.length; i ++) {
-        if (recipes[i].ustensils.length > 0 ) {
-          for (let j = 0; j < recipes[i].ustensils.length; j++) {
-          ustensilsTab.push(recipes[i].ustensils[j])
-        }
-      } else {
-        ustensilsTab.push(recipes[i].ustensils)
-      }
-}
+  setComponentsArrays(recipes);
 
 let iFinal = formatTab(ingredientsTab)
 
@@ -58,6 +38,33 @@ const containerUstensils = document.querySelector('.container-ustensil')
 
 }
 
+
+function setComponentsArrays(recipes) {
+  ingredientsTab = []
+  applianceTab = []
+  ustensilsTab = []
+
+  for (let i = 0; i < recipes.length; i++) {
+    for (let j = 0; j < recipes[i].ingredients.length; j++) {
+      ingredientsTab.push(recipes[i].ingredients[j].ingredient);
+    }
+  }
+  // Aller chercher les appareils et les mettre dans un tableau
+  for (let i = 0; i < recipes.length; i++) {
+    applianceTab.push(recipes[i].appliance);
+  }
+  // Aller chercher les ustensiles et les mettre dans un tableau
+  for (let i = 0; i < recipes.length; i++) {
+    if (recipes[i].ustensils.length > 0) {
+      for (let j = 0; j < recipes[i].ustensils.length; j++) {
+        ustensilsTab.push(recipes[i].ustensils[j]);
+      }
+    }
+    else {
+      ustensilsTab.push(recipes[i].ustensils);
+    }
+  }
+}
 
 function formatTab(tab){
   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
@@ -87,7 +94,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
     // Afficher les ingrédients dans la liste
   containerIngredients.addEventListener('click', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
-    displayList(ListGroupIngredients, iFinal, 'ingredients')
+    displayList(ListGroupIngredients, ingredientsTab, 'ingredients')
     inputIngredients.value = ''
   })
 
@@ -156,11 +163,14 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
 
 
 function mainSearch(inputSearch) {
+  const ListGroupIngredients = document.querySelector('.ingredients-list')
   let search = inputSearch.value.toLowerCase();
   filtredRecipes = [...getRecipesWithInput(filtredRecipes, search)];
-  
+
   displayCards(filtredRecipes);
   verifRecipes();
+  setComponentsArrays(filtredRecipes);
+  displayList(ListGroupIngredients, ingredientsTab, 'ingredients')
   mainSearchValue = search
 }
 
@@ -168,16 +178,15 @@ function mainSearch(inputSearch) {
 function displayList (list, currentTab, tabName) {
   list.innerHTML = ''
   for (let i = 0; i < currentTab.length; i ++) {
-            list.innerHTML += `<div class="list-group-item ${tabName}">${currentTab[i][0].toUpperCase() + currentTab[i].slice(1)}</div>`              
-              let items = document.querySelectorAll(`.${tabName}`)
-              for (let j = 0; j < items.length; j++) {
-                getTags(items, j, tabName, currentTab, list);
-              }
+            list.innerHTML += `<div class="list-group-item ${tabName}">${currentTab[i][0].toUpperCase() + currentTab[i].slice(1)}</div>`                         
+                getTags(tabName, currentTab, list);
   }
 }
 
 // Affiche les tags quand cliqués dessus
-function getTags(items, j, tabName, currentTab, list) {
+function getTags(tabName, currentTab, list) {
+let items = document.querySelectorAll(`.${tabName}`)
+for (let j = 0; j < items.length; j++) {
   items[j].addEventListener('click', (e) => {
     let tagContainer = document.querySelector('.tags');
     tagContainer.innerHTML += `<div class="tag tag-${tabName}" data-index="${selectedTags.length}">
@@ -191,6 +200,7 @@ function getTags(items, j, tabName, currentTab, list) {
     let search = items[j].innerText;
     refreshRecipes(search);
   });
+}
 }
 
 // Met à jour les recettes filtrées
