@@ -158,6 +158,7 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
 function mainSearch(inputSearch) {
   let search = inputSearch.value.toLowerCase();
   filtredRecipes = [...getRecipesWithInput(filtredRecipes, search)];
+  
   displayCards(filtredRecipes);
   verifRecipes();
   mainSearchValue = search
