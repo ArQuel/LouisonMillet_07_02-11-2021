@@ -44,27 +44,21 @@ function setComponentsArrays(recipes) {
   applianceTab = []
   ustensilsTab = []
 
-  for (let i = 0; i < recipes.length; i++) {
-    for (let j = 0; j < recipes[i].ingredients.length; j++) {
-      ingredientsTab.push(recipes[i].ingredients[j].ingredient);
-    }
-  }
-  // Aller chercher les appareils et les mettre dans un tableau
-  for (let i = 0; i < recipes.length; i++) {
-    applianceTab.push(recipes[i].appliance);
-  }
-  // Aller chercher les ustensiles et les mettre dans un tableau
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].ustensils.length > 0) {
-      for (let j = 0; j < recipes[i].ustensils.length; j++) {
-        ustensilsTab.push(recipes[i].ustensils[j]);
-      }
-    }
-    else {
-      ustensilsTab.push(recipes[i].ustensils);
-    }
-  }
+  recipes.forEach(recipe => {
+    applianceTab.push(recipe.appliance);
+    if (recipe.ustensils.length > 0) {
+      recipe.ustensils.forEach(ustensil => {
+        ustensilsTab.push(ustensil);
+      })
+    } else {
+      ustensilsTab.push(recipe.ustensils);
+    }    
+      recipe.ingredients.forEach(ingredient => {
+      ingredientsTab.push(ingredient.ingredient);
+      })
+  })
 }
+
 
 function formatTab(tab){
   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
@@ -102,12 +96,11 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   inputIngredients.addEventListener('keyup', (e) => {
     const ListGroupIngredients = document.querySelector('.ingredients-list')
     let ingredientTabSearch = []
-    for (let i = 0; i < iFinal.length; i++) {
-      // Faire pareil pour les autres
-      if ( iFinal[i].toLowerCase().includes(inputIngredients.value.toLowerCase())){
-        ingredientTabSearch.push(iFinal[i])
+    iFinal.forEach(item => {
+      if ( item.toLowerCase().includes(inputIngredients.value.toLowerCase())){
+        ingredientTabSearch.push(item)
       }
-    }
+    })
     displayList(ListGroupIngredients, ingredientTabSearch, 'ingredients')
   })
 
@@ -123,12 +116,12 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   inputAppareils.addEventListener('keyup', (e) => {
     const ListGroupAppliance = document.querySelector('.appareil-list')
     let appareilTabSearch = []
-    for (let i = 0; i < aFinal.length; i++) {
-      if (aFinal[i].toLowerCase().includes(inputAppareils.value.toLowerCase())){
-        appareilTabSearch.push(aFinal[i])
+    aFinal.forEach(item => {
+      if (item.toLowerCase().includes(inputAppareils.value.toLowerCase())){
+        appareilTabSearch.push(item)
         displayList(ListGroupAppliance, appareilTabSearch, 'appareils')
       }
-    }
+    })
   })
 
   // Afficher les ustensils dans la liste
@@ -144,21 +137,17 @@ function addEventsTo (containerIngredients, containerAppareils, containerUstensi
   inputUstensils.addEventListener('keyup', (e) => {
     const ListGroupUstensils = document.querySelector('.ustensil-list')
     let ustensilsTabSearch = []
-    for (let i = 0; i < uFinal.length; i++) {
-      if (uFinal[i].includes(inputUstensils.value.toLowerCase())){
-        ustensilsTabSearch.push(uFinal[i])
+    uFinal.forEach(item => {
+      if (item.includes(inputUstensils.value.toLowerCase())){
+        ustensilsTabSearch.push(item)
         displayList(ListGroupUstensils, ustensilsTabSearch, 'ustensils')
       } 
-    }
+    })
   })
-
-
   
   dropUp(containerIngredients)
   dropUp(containerAppareils)
   dropUp(containerUstensils)
-
-  
 }
 
 
@@ -166,7 +155,6 @@ function mainSearch(inputSearch) {
   const ListGroupIngredients = document.querySelector('.ingredients-list')
   let search = inputSearch.value.toLowerCase();
   filtredRecipes = [...getRecipesWithInput(filtredRecipes, search)];
-
   displayCards(filtredRecipes);
   verifRecipes();
   setComponentsArrays(filtredRecipes);
@@ -177,30 +165,34 @@ function mainSearch(inputSearch) {
 // Affiche les items dans les contenairs
 function displayList (list, currentTab, tabName) {
   list.innerHTML = ''
-  for (let i = 0; i < currentTab.length; i ++) {
-            list.innerHTML += `<div class="list-group-item ${tabName}">${currentTab[i][0].toUpperCase() + currentTab[i].slice(1)}</div>`                         
+  currentTab.forEach(item => {
+    list.innerHTML += `<div class="list-group-item ${tabName}">${item[0].toUpperCase() + item.slice(1)}</div>`                         
                 getTags(tabName, currentTab, list);
-  }
+  })
 }
 
 // Affiche les tags quand cliqués dessus
 function getTags(tabName, currentTab, list) {
+  const ListGroupIngredients = document.querySelector('.ingredients-list')
 let items = document.querySelectorAll(`.${tabName}`)
-for (let j = 0; j < items.length; j++) {
-  items[j].addEventListener('click', (e) => {
+items.forEach((item, index) => {
+  item.addEventListener('click', (e) => {
     let tagContainer = document.querySelector('.tags');
     tagContainer.innerHTML += `<div class="tag tag-${tabName}" data-index="${selectedTags.length}">
-                    <p>${items[j].innerText}</p>
+                    <p>${item.innerText}</p>
                     <span class="cross-${tabName}">X</span>
                   </div>`;
-    selectedTags.push(items[j].innerText);
+    selectedTags.push(item.innerText);
     // Retirer le tag de la liste
-    currentTab.splice(j, 1);
+    currentTab.splice(index, 1);
     addCross(tagContainer, currentTab, list, tabName);
-    let search = items[j].innerText;
+    let search = item.innerText;
     refreshRecipes(search);
+    setComponentsArrays(filtredRecipes);
+    displayList(ListGroupIngredients, ingredientsTab, 'ingredients')
   });
-}
+})
+
 }
 
 // Met à jour les recettes filtrées
@@ -214,70 +206,41 @@ function refreshRecipes(search) {
 
 // Ajoute un listener sur la croix des tags
 function addCross(tagContainer, currentTab) {
-  let cross = tagContainer.querySelectorAll('span');
-  for (let index = 0; index < cross.length; index++) {
-    cross[index].addEventListener('click', (e) => {
-      let tagElt = cross[index].parentNode;
+  let crosses = tagContainer.querySelectorAll('span');
+  crosses.forEach(cross => {
+    cross.addEventListener('click', (e) => {
+      let tagElt = cross.parentNode;
       tagElt.parentNode.removeChild(tagElt);
       selectedTags.splice(e.target.closest('.tag').dataset.index, 1);
-      tagElt.removeChild(cross[index])
+      tagElt.removeChild(cross)
       let value = tagElt.innerText;
       currentTab.push(value);
       filtredRecipes = recipes
-      for (let tagIndex = 0; tagIndex < selectedTags.length; tagIndex++){
-        refreshRecipes(selectedTags[tagIndex])
-      }
-      // Pour la deuxième partie
-      // selectedTags.forEach(tag => {
-      //   console.log(tag)
-      //   filtredRecipes = [... getRecipesWithIngredient(filtredRecipes, tag)]
-      // })
+      selectedTags.forEach(selectedTag => {
+        refreshRecipes(selectedTag)
+      })
       const inputSearch = document.querySelector('#Search')
       mainSearch(inputSearch)
-    });
-  }
+    })
+  })
 }
 
 // Recherche par l'input
 function getRecipesWithInput (recipes, search) {
   let recipesWithInput = []
-  for (let index = 0; index < recipes.length; index ++) {
-    const recipe = recipes[index]
-    if (recipe.name.toLowerCase().includes(search)) {
-      recipesWithInput.push(recipe)
-    }
-    for (let i = 0; i < recipe.ingredients.length; i ++) {
-      let ingredient = recipe.ingredients[i].ingredient;
-      if (ingredient.toLowerCase().includes(search)) {
-        recipesWithInput.push(recipe)
-      }
-    }
-    let appliance = recipe.appliance;
-      if (appliance.toLowerCase().includes(search)) {
-        recipesWithInput.push(recipe)
-      }
-      let ustensil = recipe.ustensils;
-      for (let i = 0; i < ustensil.length; i++){
-        if (ustensil[i].toLowerCase().includes(search)) {
-          recipesWithInput.push(recipe)
-        }
-      }
-  }
+  recipesWithInput = [...recipes.filter(
+    recipe => recipe.name.toLowerCase().includes(search) ||
+    recipe.ingredients.find(ingredient => ingredient.ingredient.toLowerCase().includes(search)) ||
+    recipe.appliance.toLowerCase().includes(search) ||
+    recipe.ustensils.find(ustensil => ustensil.toLowerCase().includes(search)))]
   return [... new Set(recipesWithInput)]
 }
 
 // Recherche par ingredients
 function getRecipesWithIngredient (recipes, search) {
   let recipesWithIngredient = []
-  for (let index = 0; index < recipes.length; index ++) {
-    const recipe = recipes[index]
-    for (let i = 0; i < recipe.ingredients.length; i ++) {
-      let ingredient = recipe.ingredients[i].ingredient;
-      if (ingredient === search) {
-        recipesWithIngredient.push(recipe)
-      }
-    }
-  }
+  recipesWithIngredient = [... recipes.filter(
+    recipe => recipe.ingredients.find(ingredient => ingredient.ingredient === search))]
   return [... new Set(recipesWithIngredient)]
 }
 
