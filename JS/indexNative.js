@@ -247,28 +247,18 @@ function getRecipesWithIngredient (recipes, search) {
 // Recherche par Appareils
 function getRecipesWithAppliance (recipes, search) {
   let recipesWithAppliance= []
-  for (let index = 0; index < recipes.length; index ++) {
-    const recipe = recipes[index]
-      let appliance = recipe.appliance;
-      if (appliance === search) {
-        recipesWithAppliance.push(recipe)
-      }
-  }
+  recipesWithAppliance = [... recipes.filter(
+    recipe => recipe.appliance === search
+  )]
   return [... new Set(recipesWithAppliance)]
 }
 
 // Recherche par Ustensils
 function getRecipesWithUstensil (recipes, search) {
   let recipesWithUstensil = []
-  for (let index = 0; index < recipes.length; index ++) {
-    const recipe = recipes[index]
-      let ustensil = recipe.ustensils;
-      for (let i = 0; i < ustensil.length; i++){
-        if (ustensil[i] === search.toLowerCase()) {
-          recipesWithUstensil.push(recipe)
-        }
-      }
-  }
+  recipesWithUstensil = [...recipes.filter(
+    recipe => recipe.ustensils.ustensil === search
+  )]
   return [... new Set(recipesWithUstensil)]
 }
 
@@ -288,11 +278,11 @@ function dropUp(ctnElt){
 }
 
 // Afficher les recettes filtrées
-function displayCards (result) {
+function displayCards (results) {
     const cardsCtn = document.querySelector('.cards')
     cardsCtn.innerHTML = ''
-    for (let i = 0; i < result.length; i ++){
-      let recette = result[i]
+    results.forEach(result => {
+      let recette = result
       cardsCtn.innerHTML += `
       <div class="card-recipe" id="${recette.id}">
         <img class="card-img-top" src="./Style/img/Capture.JPG" alt="Card image cap">
@@ -316,7 +306,8 @@ function displayCards (result) {
           cardBody.innerHTML += `<p class="card-ingredient"><b>${ingredient}</b> : ${quantity} ${unit}</p>`
         }
       }
-    }
+    })
+
     verifRecipes()
 }
 
