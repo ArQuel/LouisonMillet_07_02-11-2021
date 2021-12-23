@@ -257,7 +257,7 @@ function getRecipesWithAppliance (recipes, search) {
 function getRecipesWithUstensil (recipes, search) {
   let recipesWithUstensil = []
   recipesWithUstensil = [...recipes.filter(
-    recipe => recipe.ustensils.ustensil === search
+    recipe => recipe.ustensils.find(ustensil => ustensil === search)
   )]
   return [... new Set(recipesWithUstensil)]
 }
@@ -326,18 +326,3 @@ function verifRecipes() {
     </div>`
   }
 }
-
-//        ---------------------------------------------------------------------- POUR LA PROCHAINE PARTIE --------------------------------------------------------------------------------
-
-
-
-// containerIngredients.addEventListener('click', (e) => {
-//   ListGroupIngredients.innerHTML = ingredientsTabFinal.map(elt =>  `<li class="list-group-item">${elt}</li>` ).join('')
-// })
-
-
-// function formatList(list){
-//   // filtrer le tableau des ustensils en mettant en minuscule et retirer les doublons
-// const newList = list.map(elt => elt.toLowerCase())
-// return Array.from(new Set(newList))
-// }
